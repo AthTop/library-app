@@ -29,9 +29,10 @@ function addBookToLibrary(title, author, pages, read) {
 // Go through library and create cards out of books to append to an element
 function displayBooks(element) {
     element.innerHTML = "";
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book, index) => {
         const newDiv = document.createElement("div");
         newDiv.classList.add("card");
+        newDiv.dataset.bookIndex = index;
         for (const key in book) {
             const newP = document.createElement("p");
             if (key === "read") {
@@ -43,8 +44,18 @@ function displayBooks(element) {
             }
             newDiv.append(newP);
         }
+        const rmButton = document.createElement("button");
+        rmButton.textContent = "Remove";
+        rmButton.classList.add("remove-button");
+        newDiv.append(rmButton);
         element.append(newDiv);
     })
+}
+
+function removeBook(bookdcard) {
+    arrayIndex = bookdcard.dataset.bookIndex;
+    myLibrary.splice(arrayIndex, 1);
+    bookdcard.remove();
 }
 
 // New Book form
@@ -57,7 +68,7 @@ const formTitle = document.querySelector("#title");
 const formAuthor = document.querySelector("#author");
 const formPages = document.querySelector("#pages");
 const formRead = document.querySelector("#read");
-const main = document.querySelector(".library");
+const library = document.querySelector(".library");
 
 showButton.addEventListener('click' , () => {
     dialog.showModal();
@@ -71,10 +82,12 @@ closeButton.addEventListener('click', (e) => {
 addNewBookButton.addEventListener('click', (e) => {
     e.preventDefault();
     addBookToLibrary(formTitle.value, formAuthor.value, formPages.value, formRead.checked);
-    displayBooks(main);
+    displayBooks(library);
 });
 
-
-
-
+library.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-button")){
+        removeBook(e.target.parentElement);
+    }
+});
 

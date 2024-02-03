@@ -38,3 +38,16 @@ dialog form {
     flex-wrap: wrap;
     gap: 5px;
 }
+
+.remove-button {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 2px 10px;
+    font-size: 14px;
+    background-color: #ff0055;
+    box-shadow: 1px 1px 1px 0;
+}
+
+.remove-button:active {
+    box-shadow: none;
+}
