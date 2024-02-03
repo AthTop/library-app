@@ -1,0 +1,40 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    text-transform: capitalize;
+    background: #EEDDDD;
+    min-width: 250px;
+    width: max-content;
+    padding: 5px;
+    line-height: 0.1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-left: 10px solid #054d05;
+}
+
+dialog[open] {
+    border: none;
+    background-color: #DDEEEE;
+    border: 1px solid black;
+    border-radius: 5px;
+    position: fixed;
+    top: -50%;
+}
+
+dialog form {
+    display: grid;
+    padding: 20px;
+    gap: 5px;
+}
+
+::backdrop {
+    background: #eeeeee99;
+}
+
+.library {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}

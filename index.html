@@ -6,8 +6,31 @@
     <title>Document</title>
     <script src="main.js" async></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main></main>
+    <main>
+        <div class="new-book-area">
+            <dialog>
+                <form>
+                    <label for="title">Book Title</label>
+                    <input type="text" name="title" id="title">
+                    <label for="author">Author</label>
+                    <input type="text" name="author" id="author">
+                    <label for="pages">Pages</label>
+                    <input type="tel" name="pages" id="pages">
+                    <label>Read<input type="checkbox" name="read" id="read"></label>
+                    <div>
+                        <button id="add-book">Add Book</button>
+                        <button id="close-form">Close</button>
+                    </div>
+                </form>
+            </dialog>
+            <button id='new-book-form-on'>Add New Book</button>
+        </div>
+        <div class="library"></div>
+    </main>
 </body>
 </html>

@@ -13,16 +13,6 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        let readStatus;
-        if (this.read) {
-            readStatus = "read";
-        }
-        else {
-            readStatus = "not read yet"
-        }
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}.`;
-    }
 }
 
 // create new book object and add it to array
@@ -31,22 +21,60 @@ function addBookToLibrary(title, author, pages, read) {
     if (!myLibrary.find(book => book.title === newBook.title)) {
         myLibrary.push(newBook);
     }
-    return "Book exists";
+    else {
+        return alert("Book exists");
+    } 
 }
 
-function displayBooks(doc) {
+// Go through library and create cards out of books to append to an element
+function displayBooks(element) {
+    element.innerHTML = "";
     myLibrary.forEach(book => {
         const newDiv = document.createElement("div");
         newDiv.classList.add("card");
         for (const key in book) {
             const newP = document.createElement("p");
-            // TODO add check for read and convert to string
-            newP.textContent = `${key} : ${book[key]}`;
+            if (key === "read") {
+                if (book[key]) newP.textContent = "read : Yes";
+                if (!book[key]) newP.textContent = "read : No";
+            }
+            else {
+                newP.textContent = `${key} : ${book[key]}`;
+            }
             newDiv.append(newP);
         }
-        doc.append(newDiv);
+        element.append(newDiv);
     })
 }
 
-const main = document.querySelector("main");
-displayBooks(main);
+// New Book form
+
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("#new-book-form-on");
+const closeButton = document.querySelector('#close-form');
+const addNewBookButton = document.querySelector("#add-book");
+const formTitle = document.querySelector("#title");
+const formAuthor = document.querySelector("#author");
+const formPages = document.querySelector("#pages");
+const formRead = document.querySelector("#read");
+const main = document.querySelector(".library");
+
+showButton.addEventListener('click' , () => {
+    dialog.showModal();
+});
+
+closeButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    dialog.close();
+});
+
+addNewBookButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    addBookToLibrary(formTitle.value, formAuthor.value, formPages.value, formRead.checked);
+    displayBooks(main);
+});
+
+
+
+
+
