@@ -38,6 +38,13 @@ function displayBooks(element) {
             if (key === "read") {
                 if (book[key]) newP.textContent = "read : Yes";
                 if (!book[key]) newP.textContent = "read : No";
+                const readDiv = document.createElement("div");
+                const changeStatusButton = document.createElement("button");
+                changeStatusButton.classList.add("change-status");
+                readDiv.append(newP);
+                readDiv.append(changeStatusButton);
+                newDiv.append(readDiv);
+                continue;
             }
             else {
                 newP.textContent = `${key} : ${book[key]}`;
@@ -56,6 +63,13 @@ function removeBook(bookdcard) {
     arrayIndex = bookdcard.dataset.bookIndex;
     myLibrary.splice(arrayIndex, 1);
     bookdcard.remove();
+    displayBooks(library);
+}
+
+function changeReadStatus(book) {
+    arrayIndex = book.dataset.bookIndex;
+    myLibrary[arrayIndex].read = !myLibrary[arrayIndex].read;
+    displayBooks(library);
 }
 
 // New Book form
@@ -86,8 +100,11 @@ addNewBookButton.addEventListener('click', (e) => {
 });
 
 library.addEventListener("click", (e) => {
-    if (e.target.classList.contains("remove-button")){
+    if (e.target.classList.contains("remove-button")) {
         removeBook(e.target.parentElement);
+    }
+    if (e.target.classList.contains("change-status")) {
+        changeReadStatus(e.target.parentElement.parentElement);
     }
 });
 
