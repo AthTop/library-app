@@ -1,10 +1,4 @@
 const myLibrary = [
-    {
-        title: "Hobbit",
-        author: "J.R.R. Tolkien",
-        pages: "295",
-        read: true
-    }
 ];
 
 // Constructor for Book objects
@@ -13,6 +7,10 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
+}
+
+Book.prototype.changeReadStatus = function() {
+    this.read = !this.read;
 }
 
 // create new book object and add it to array
@@ -33,7 +31,7 @@ function displayBooks(element) {
         const newDiv = document.createElement("div");
         newDiv.classList.add("card");
         newDiv.dataset.bookIndex = index;
-        for (const key in book) {
+        Object.keys(book).forEach(key => {
             const newP = document.createElement("p");
             if (key === "read") {
                 if (book[key]) newP.textContent = "read : Yes";
@@ -44,13 +42,12 @@ function displayBooks(element) {
                 readDiv.append(newP);
                 readDiv.append(changeStatusButton);
                 newDiv.append(readDiv);
-                continue;
             }
             else {
                 newP.textContent = `${key} : ${book[key]}`;
+                newDiv.append(newP);
             }
-            newDiv.append(newP);
-        }
+        });
         const rmButton = document.createElement("button");
         rmButton.textContent = "Remove";
         rmButton.classList.add("remove-button");
@@ -62,13 +59,12 @@ function displayBooks(element) {
 function removeBook(bookdcard) {
     arrayIndex = bookdcard.dataset.bookIndex;
     myLibrary.splice(arrayIndex, 1);
-    bookdcard.remove();
     displayBooks(library);
 }
 
 function changeReadStatus(book) {
     arrayIndex = book.dataset.bookIndex;
-    myLibrary[arrayIndex].read = !myLibrary[arrayIndex].read;
+    myLibrary[arrayIndex].changeReadStatus();
     displayBooks(library);
 }
 
