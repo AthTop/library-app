@@ -1,33 +1,45 @@
-const myLibrary = [
-];
-
-// Constructor for Book objects
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-Book.prototype.changeReadStatus = function() {
-    this.read = !this.read;
-}
-
-// create new book object and add it to array
-function addBookToLibrary(title, author, pages, read) {
-    let newBook = new Book(title, author, pages, read);
-    if (!myLibrary.find(book => book.title === newBook.title)) {
-        myLibrary.push(newBook);
+// Library class
+class Library {
+    books = [];
+    constructor() {}
+    addBookToLibrary(newBook) {
+        if (!this.books.find(book => book.title === newBook.title)) {
+            this.books.push(newBook);
+        }
+        else {
+            return alert("Book exists");
+        } 
     }
-    else {
-        return alert("Book exists");
-    } 
 }
+
+// Book clas
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    changeRead() {
+        this.read = !this.read;
+    }
+}
+
+// // create new book object and add it to array
+// function addBookToLibrary(title, author, pages, read) {
+//     let newBook = new Book(title, author, pages, read);
+//     if (!myLibrary.find(book => book.title === newBook.title)) {
+//         myLibrary.push(newBook);
+//     }
+//     else {
+//         return alert("Book exists");
+//     } 
+// }
 
 // Go through library and create cards out of books to append to an element
 function displayBooks(element) {
     element.innerHTML = "";
-    myLibrary.forEach((book, index) => {
+    myLibrary.books.forEach((book, index) => {
         const newDiv = document.createElement("div");
         newDiv.classList.add("card");
         newDiv.dataset.bookIndex = index;
@@ -58,13 +70,21 @@ function displayBooks(element) {
 
 function removeBook(bookdcard) {
     arrayIndex = bookdcard.dataset.bookIndex;
-    myLibrary.splice(arrayIndex, 1);
+    myLibrary.books.splice(arrayIndex, 1);
     displayBooks(library);
 }
 
 function changeReadStatus(book) {
     arrayIndex = book.dataset.bookIndex;
-    myLibrary[arrayIndex].changeReadStatus();
+    myLibrary.books[arrayIndex].changeRead();
+    displayBooks(library);
+}
+
+function createNewBook(e) {
+    e.preventDefault();
+    const newBook = new Book(formTitle.value, formAuthor.value, formPages.value, formRead.checked);
+    myLibrary.addBookToLibrary(newBook);
+    
     displayBooks(library);
 }
 
@@ -80,6 +100,8 @@ const formPages = document.querySelector("#pages");
 const formRead = document.querySelector("#read");
 const library = document.querySelector(".library");
 
+const myLibrary = new Library();
+
 showButton.addEventListener('click' , () => {
     dialog.showModal();
 });
@@ -89,11 +111,7 @@ closeButton.addEventListener('click', (e) => {
     dialog.close();
 });
 
-addNewBookButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    addBookToLibrary(formTitle.value, formAuthor.value, formPages.value, formRead.checked);
-    displayBooks(library);
-});
+addNewBookButton.addEventListener('click', createNewBook);
 
 library.addEventListener("click", (e) => {
     if (e.target.classList.contains("remove-button")) {
