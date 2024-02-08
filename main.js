@@ -12,7 +12,7 @@ class Library {
     }
 }
 
-// Book clas
+// Book class
 class Book {
     constructor(title, author, pages, read) {
         this.title = title;
