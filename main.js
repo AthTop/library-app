@@ -88,6 +88,22 @@ function createNewBook(e) {
     displayBooks(library);
 }
 
+function validateForm(e) {
+    if (formTitle.validity.valueMissing) {
+        formTitle.setCustomValidity(`I'm a expecting a title.`);
+    }
+    else if (formAuthor.validity.valueMissing) {
+        formAuthor.setCustomValidity(`I'm expecting an author`);
+    }
+    else if (formPages.validity.valueMissing || formPages.validity.patternMismatch) {
+        formPages.setCustomValidity('Please use a number for pages.');
+        console.log(formPages.validity.patternMismatch);
+    }
+    else {
+        createNewBook(e);
+    };
+}
+
 // New Book form
 
 const dialog = document.querySelector("dialog");
@@ -111,7 +127,34 @@ closeButton.addEventListener('click', (e) => {
     dialog.close();
 });
 
-addNewBookButton.addEventListener('click', createNewBook);
+addNewBookButton.addEventListener('click', (e) => validateForm(e));
+
+formTitle.addEventListener('input', () => {
+    if (formTitle.validity.valueMissing) {
+        formTitle.setCustomValidity(`I'm a expecting a title.`);
+    }
+    else {
+        formTitle.setCustomValidity('');
+    }
+})
+
+formAuthor.addEventListener('input', () => {
+    if (formAuthor.validity.valueMissing) {
+        formAuthor.setCustomValidity(`I'm expecting an author`);
+    }
+    else {
+        formAuthor.setCustomValidity('');
+    }
+})
+
+formPages.addEventListener('input', () => {
+    if (formPages.validity.valueMissing || formPages.validity.patternMismatch) {
+        formPages.setCustomValidity('Please use a number for pages.');
+    }
+    else {
+        formPages.setCustomValidity('');
+    }
+})
 
 library.addEventListener("click", (e) => {
     if (e.target.classList.contains("remove-button")) {

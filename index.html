@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Library</title>
     <script src="main.js" async></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,14 +16,14 @@
             <dialog>
                 <form>
                     <label for="title">Book Title</label>
-                    <input type="text" name="title" id="title">
+                    <input type="text" name="title" id="title" required>
                     <label for="author">Author</label>
-                    <input type="text" name="author" id="author">
+                    <input type="text" name="author" id="author" required>
                     <label for="pages">Pages</label>
-                    <input type="tel" name="pages" id="pages">
+                    <input type="text" name="pages" id="pages" pattern = "\d+" required>
                     <label>Read<input type="checkbox" name="read" id="read"></label>
                     <div>
-                        <button id="add-book">Add Book</button>
+                        <button id="add-book" type="submit">Add Book</button>
                         <button id="close-form">Close</button>
                     </div>
                 </form>
